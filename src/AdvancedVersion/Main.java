@@ -21,13 +21,16 @@ public class Main {
         final JTextField hostInput = new JTextField(30);
         final JTextField connectPortInput = new JTextField("" + DEFAULT_PORT, 5);
         final JTextField userName = new JTextField(30);
+        final JTextField userNameSingle = new JTextField(30);
 
         final JRadioButton selectServerMode = new JRadioButton("Start server on this computer");
+        final JRadioButton selectSingleMode = new JRadioButton("Start a game with computer");
         final JRadioButton selectClientMode = new JRadioButton("Connect to existing game or create a new 1 vs 1 game");
 
         ButtonGroup group = new ButtonGroup();
         group.add(selectServerMode);
         group.add(selectClientMode);
+        group.add(selectSingleMode);
         ActionListener radioListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == selectServerMode) {
@@ -39,8 +42,10 @@ public class Main {
                     connectPortInput.setEditable(false);
                     userName.setEnabled(false);
                     userName.setEditable(false);
+                    userNameSingle.setEnabled(false);
+                    userNameSingle.setEditable(false);
                 }
-                else {
+                else if(e.getSource() == selectClientMode){
                     listeningPortInput.setEnabled(false);
                     hostInput.setEnabled(true);
                     connectPortInput.setEnabled(true);
@@ -49,16 +54,34 @@ public class Main {
                     connectPortInput.setEditable(true);
                     userName.setEditable(true);
                     userName.setEnabled(true);
+                    userNameSingle.setEnabled(false);
+                    userNameSingle.setEditable(false);
+                } else {
+                    listeningPortInput.setEnabled(false);
+                    hostInput.setEnabled(false);
+                    connectPortInput.setEnabled(false);
+                    listeningPortInput.setEditable(false);
+                    hostInput.setEditable(false);
+                    connectPortInput.setEditable(false);
+                    userName.setEnabled(false);
+                    userName.setEditable(false);
+                    userNameSingle.setEnabled(true);
+                    userNameSingle.setEditable(true);
                 }
             }
         };
         selectServerMode.addActionListener(radioListener);
         selectClientMode.addActionListener(radioListener);
+        selectSingleMode.addActionListener(radioListener);
         selectServerMode.setSelected(true);
         hostInput.setEnabled(false);
         connectPortInput.setEnabled(false);
         hostInput.setEditable(false);
         connectPortInput.setEditable(false);
+        userName.setEditable(false);
+        userName.setEnabled(false);
+        userNameSingle.setEnabled(false);
+        userNameSingle.setEditable(false);
 
 
         JPanel inputPanel = new JPanel();
@@ -78,6 +101,15 @@ public class Main {
         row.add(Box.createHorizontalStrut(40));
         row.add(new JLabel("Listen on port: "));
         row.add(listeningPortInput);
+        inputPanel.add(row);
+
+        inputPanel.add(selectSingleMode);
+
+        row = new JPanel();
+        row.setLayout(new FlowLayout(FlowLayout.LEFT));
+        row.add(Box.createHorizontalStrut(40));
+        row.add(new JLabel("Your name: "));
+        row.add(userNameSingle);
         inputPanel.add(row);
 
         inputPanel.add(selectClientMode);
@@ -145,7 +177,7 @@ public class Main {
                 }
                 break;
             }
-            else {
+            else if(selectClientMode.isSelected()){
                 String host;
                 String username;
                 int port;
@@ -181,6 +213,17 @@ public class Main {
                     hostInput.requestFocus();
                     continue;
                 }
+                break;
+            }else {
+                String username;
+                username = userNameSingle.getText().toLowerCase().trim();
+                if (username.length() == 0) {
+                    message.setText("Username is required!");
+                    userNameSingle.requestFocus();
+                    continue;
+                }
+
+                new SingleModeWindow(username);
                 break;
             }
         }
