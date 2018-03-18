@@ -17,6 +17,7 @@ public class Main {
         JLabel message = new JLabel("Welcome to Networked RPS!", JLabel.CENTER);
         message.setFont(new Font("Serif", Font.BOLD, 16));
 
+
         final JTextField listeningPortInput = new JTextField("" + DEFAULT_PORT, 5);
         final JTextField hostInput = new JTextField(30);
         final JTextField connectPortInput = new JTextField("" + DEFAULT_PORT, 5);
@@ -193,6 +194,21 @@ public class Main {
                     userName.requestFocus();
                     continue;
                 }
+
+                if (!checkValidName(username)) {
+                    message.setText("Username should be different!");
+                    userName.setText("");
+                    userName.requestFocus();
+                    continue;
+                }
+
+                if ("computer".equals(username)) {
+                    message.setText("You cannot use this name...");
+                    userName.setText("");
+                    userName.requestFocus();
+                    continue;
+                }
+
                 try {
                     port = Integer.parseInt(connectPortInput.getText().trim());
                     if (port <= 0)
@@ -223,11 +239,22 @@ public class Main {
                     continue;
                 }
 
+                if ("computer".equals(username)) {
+                    message.setText("You cannot use this name...");
+                    userNameSingle.setText("");
+                    userNameSingle.requestFocus();
+                    continue;
+                }
+
                 new SingleModeWindow(username);
                 break;
             }
         }
 
+    }
+
+    public static boolean checkValidName(String name) {
+        return FileHandler.writeLoginLogs(name);
     }
 }
 

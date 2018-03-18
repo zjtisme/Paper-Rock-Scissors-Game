@@ -97,15 +97,15 @@ public class RPSGameState implements Serializable {
         }
     }
 
-    public void showHistoryOfPlayer(int id) {
+    public String showHistoryOfPlayer(int id) {
         if(id == player1ID) {
             if(player1 == null)
-                return;
-            player1.displayRecords();
+                return "";
+            return player1.displayRecords();
         } else {
             if(player2 == null)
-                return;
-            player2.displayRecords();
+                return "";
+            return player2.displayRecords();
         }
     }
 

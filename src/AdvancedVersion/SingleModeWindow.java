@@ -145,43 +145,44 @@ public class SingleModeWindow extends JFrame{
         if(rock.isSelected()) {
             player.setChoice("rock");
             if(computerChoice == 0) {
-                player.setRes("Tie", "Computer", "rock");
-                status.setText(gameRes + "Tie\n" + "Your choice: rock  Computer's choice: rock");
+                player.setRes("Tie", "computer", "rock");
+                status.setText(gameRes + "Tie\n" + "Your choice: rock  computer's choice: rock");
             } else if (computerChoice == 1) {
-                player.setRes("Loss", "Computer", "paper");
-                status.setText(gameRes + "Loss\n" + "Your choice: rock  Computer's choice: paper");
+                player.setRes("Loss", "computer", "paper");
+                status.setText(gameRes + "Loss\n" + "Your choice: rock  computer's choice: paper");
             } else {
-                player.setRes("Win", "Computer", "scissors");
-                status.setText(gameRes + "Win\n" + "Your choice: rock  Computer's choice: scissors");
+                player.setRes("Win", "computer", "scissors");
+                status.setText(gameRes + "Win\n" + "Your choice: rock  computer's choice: scissors");
             }
         } else if(paper.isSelected()) {
             player.setChoice("paper");
             if(computerChoice == 1) {
-                player.setRes("Tie", "Computer", "paper");
-                status.setText(gameRes + "Tie\n" + "Your choice: paper  Computer's choice: paper");
+                player.setRes("Tie", "computer", "paper");
+                status.setText(gameRes + "Tie\n" + "Your choice: paper  computer's choice: paper");
             } else if (computerChoice == 2) {
-                player.setRes("Loss", "Computer", "scissors");
-                status.setText(gameRes + "Loss\n" + "Your choice: paper  Computer's choice: scissors");
+                player.setRes("Loss", "computer", "scissors");
+                status.setText(gameRes + "Loss\n" + "Your choice: paper  computer's choice: scissors");
             } else {
-                player.setRes("Win", "Computer", "rock");
-                status.setText(gameRes + "Win\n" + "Your choice: paper  Computer's choice: rock");
+                player.setRes("Win", "computer", "rock");
+                status.setText(gameRes + "Win\n" + "Your choice: paper  computer's choice: rock");
             }
         } else {
             player.setChoice("scissors");
             if(computerChoice == 2) {
-                player.setRes("Tie", "Computer", "scissors");
-                status.setText(gameRes + "Tie\n" + "Your choice: scissors  Computer's choice: scissors");
+                player.setRes("Tie", "computer", "scissors");
+                status.setText(gameRes + "Tie\n" + "Your choice: scissors  computer's choice: scissors");
             } else if (computerChoice == 0) {
-                player.setRes("Loss", "Computer", "rock");
-                status.setText(gameRes + "Loss\n" + "Your choice: scissors  Computer's choice: rock");
+                player.setRes("Loss", "computer", "rock");
+                status.setText(gameRes + "Loss\n" + "Your choice: scissors  computer's choice: rock");
             } else {
-                player.setRes("Win", "Computer", "paper");
-                status.setText(gameRes + "Win\n" + "Your choice: scissors  Computer's choice: paper");
+                player.setRes("Win", "computer", "paper");
+                status.setText(gameRes + "Win\n" + "Your choice: scissors  computer's choice: paper");
             }
         }
     }
 
     private void startShowHistory() {
-        player.displayRecords();
+        String histroy = FileHandler.displayHistories(player.getName());
+        new DisplayBoard("History Board for " + player.getName(), histroy);
     }
 }

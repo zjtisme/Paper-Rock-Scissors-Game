@@ -15,11 +15,6 @@ public class RPSGameHub extends Hub{
     }
 
     protected void messageReceived(int playerID, Object message) {
-        if(message instanceof Object[]) {
-            Object[] items = (Object[])message;
-            String choice = (String) items[1];
-            System.out.println(playerID + " " + choice);
-        }
         state.applyMessage(playerID, message);
         sendToAll(state);
     }
@@ -35,5 +30,8 @@ public class RPSGameHub extends Hub{
     protected void playerDisconnected(int playerID) {
         state.playerDisconnected = true;
         sendToAll(state);
+        if(FileHandler.checkFileExist(FileHandler.logFileName)) {
+            FileHandler.deleteLoginLogs();
+        }
     }
 }

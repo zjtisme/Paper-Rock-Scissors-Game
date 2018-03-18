@@ -11,7 +11,6 @@ public class Player implements Serializable{
     private String choice;
     private int score;
     private String res;
-    private List<String> record = new ArrayList<>();
 
     public int getScore() {
         return score;
@@ -55,33 +54,34 @@ public class Player implements Serializable{
         LocalDateTime now = LocalDateTime.now();
         String currentTimestamp = dtf.format(now);
 
-        String cur = currentTimestamp + " " + res + " : " + name + "-" + choice + " " + opponentName + "-" + opponentChoice + "\n";
-        if(res.equals("Tie")) {
-            score += 5;
-        } else if(res.equals("Win")) {
-            score += 10;
-        } else {
-            score += 0;
+        String cur = currentTimestamp + " " + res + " : " + name + "-" + choice + " " + opponentName + "-" + opponentChoice;
+        if(!opponentName.equals("computer")) {
+            if (res.equals("Tie")) {
+                score = 5;
+            } else if (res.equals("Win")) {
+                score = 10;
+            } else {
+                score = 0;
+            }
         }
 
-        record.add(cur);
+        FileHandler.writeHistories(cur, this.name);
+        if(score > 0)
+            FileHandler.writeScores(score, this.name);
     }
 
-    public void displayRecords() {
+    public String displayRecords() {
+        List<String> histories = FileHandler.readHistories(name);
+        if(histories == null || histories.size() == 0)
+            System.out.println("No any available histories");
+
         StringBuilder sb = new StringBuilder();
-        for (String s: record) {
-            sb.append(s);
+        sb.append("History Board\n==========\n");
+        for(String h: histories) {
+            sb.append(h + "\n");
         }
 
-        System.out.println(sb.toString());
-    }
-
-    public List<String> getRecord() {
-        return record;
-    }
-
-    public void setRecord(List<String> record) {
-        this.record = record;
+        return sb.toString();
     }
 
     @Override

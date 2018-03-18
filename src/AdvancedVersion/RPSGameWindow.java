@@ -137,9 +137,9 @@ public class RPSGameWindow extends JFrame{
                 if(e.getSource() == play) {
                     startPlay();
                 } else if(e.getSource() == history) {
-                    startShowHistory(myID);
+                    startShowHistory();
                 } else {
-                    startShowRanks(myID);
+                    startShowRanks();
                 }
             }
         };
@@ -200,11 +200,14 @@ public class RPSGameWindow extends JFrame{
         connection.send(items);
     }
 
-    private void startShowHistory(int id) {
-        state.showHistoryOfPlayer(id);
+    private void startShowHistory() {
+        String history = FileHandler.displayHistories(player.getName());
+        new DisplayBoard("History Board for " + player.getName(), history);
     }
 
-    private void startShowRanks(int id) {
+    private void startShowRanks() {
+        String ranks = FileHandler.displayRanks();
+        new DisplayBoard("Rank Board", ranks);
     }
 
     private void newState(RPSGameState state) {
