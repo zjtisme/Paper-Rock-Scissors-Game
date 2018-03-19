@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class RPSGameState implements Serializable {
     public boolean playerDisconnected;
 
-//    public boolean gameInProgress;
 
     public boolean gameFinished;
 
@@ -36,7 +35,6 @@ public class RPSGameState implements Serializable {
 
             if((player1 != null && player2 != null) && (player1Choice.length() > 0 && player2Choice.length() > 0)) {
                 handleRes(player1Choice, player2Choice);
-//                gameInProgress = false;
                 gameFinished = true;
             }
         } else if(gameFinished && message.equals("newgame")) {
@@ -94,18 +92,6 @@ public class RPSGameState implements Serializable {
             return player2;
         } else {
             return player1;
-        }
-    }
-
-    public String showHistoryOfPlayer(int id) {
-        if(id == player1ID) {
-            if(player1 == null)
-                return "";
-            return player1.displayRecords();
-        } else {
-            if(player2 == null)
-                return "";
-            return player2.displayRecords();
         }
     }
 
